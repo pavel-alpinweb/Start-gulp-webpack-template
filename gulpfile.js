@@ -3,6 +3,7 @@ const pug = require('gulp-pug');
 const sourcemaps = require('gulp-sourcemaps');
 const postcss = require('gulp-postcss');
 const rename = require('gulp-rename');
+const del = require('del');
 
 const paths = {
     root: 'build',
@@ -16,6 +17,11 @@ const paths = {
         src: './src/assets/styles/**/*.scss',
         dest: './build/assets/styles'
     }
+}
+
+//clean
+function clean() {
+    return del(paths.root);   
 }
 
 //pug
@@ -37,3 +43,4 @@ function styles() {
 
 exports.templates = templates;
 exports.styles = styles;
+exports.clean = clean;
