@@ -6,7 +6,7 @@ ehthumbs.db
 Desktop.ini
 
 /node_modules/*
-/.build/
+/build/
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
