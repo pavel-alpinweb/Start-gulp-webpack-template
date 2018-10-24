@@ -41,6 +41,12 @@ function styles() {
         .pipe(gulp.dest(paths.styles.dest))
 }
 
+// watch
+gulp.task('default', gulp.series(
+    clean,
+    gulp.parallel(styles, templates)
+));
+
 exports.templates = templates;
 exports.styles = styles;
 exports.clean = clean;
