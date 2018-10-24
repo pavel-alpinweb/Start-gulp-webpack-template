@@ -18,8 +18,11 @@
     "gulp-sourcemaps": "^2.6.4",
     "postcss-advanced-variables": "^2.3.3",
     "postcss-easy-import": "^3.0.0",
+    "postcss-inline-svg": "^3.1.1",
     "postcss-nested": "^4.1.0",
+    "postcss-rgb": "^1.0.0",
     "postcss-scss": "^2.0.0",
+    "postcss-svgo": "^4.0.1",
     "webpack": "^4.22.0",
     "webpack-cli": "^3.1.2"
   },
