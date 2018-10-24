@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const pug = require('gulp-pug');
 
-const path = {
+const paths = {
     root: '.build',
     templates: {
         pages: 'src/views/pages/*.pug',
@@ -14,7 +14,7 @@ const path = {
 function templates() {
     return gulp.src(paths.templates.pages)
         .pipe(pug({ pretty: true }))
-        .pipe(gulp.dest(path.root));
+        .pipe(gulp.dest(paths.root));
 }
 
 exports.templates = templates;
