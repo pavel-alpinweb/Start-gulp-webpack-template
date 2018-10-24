@@ -4,6 +4,9 @@ const sourcemaps = require('gulp-sourcemaps');
 const postcss = require('gulp-postcss');
 const rename = require('gulp-rename');
 const del = require('del');
+const gulpWebpack = require('gulp-webpack');
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config.js');
 
 const paths = {
     root: 'build',
@@ -16,6 +19,10 @@ const paths = {
         main: './src/assets/styles/main.scss',
         src: './src/assets/styles/**/*.scss',
         dest: './build/assets/styles'
+    },
+    scripts: {
+        src: './src/assets/scripts/*.js',
+        dest: './build/assets/scripts/'
     }
 }
 
@@ -44,9 +51,17 @@ function styles() {
 // watch
 gulp.task('default', gulp.series(
     clean,
-    gulp.parallel(styles, templates)
+    gulp.parallel(styles, templates, scripts)
 ));
+
+// webpack
+function scripts() {
+    return gulp.src(paths.scripts.src)
+        .pipe(gulpWebpack(webpackConfig, webpack))
+        .pipe(gulp.dest(paths.scripts.dest));
+}
 
 exports.templates = templates;
 exports.styles = styles;
 exports.clean = clean;
+exports.scripts = scripts;
