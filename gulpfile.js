@@ -7,6 +7,7 @@ const del = require('del');
 const gulpWebpack = require('gulp-webpack');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config.js');
+const browserSync = require('browser-sync').create();
 
 const paths = {
     root: 'build',
@@ -48,12 +49,6 @@ function styles() {
         .pipe(gulp.dest(paths.styles.dest))
 }
 
-// watch
-gulp.task('default', gulp.series(
-    clean,
-    gulp.parallel(styles, templates, scripts)
-));
-
 // webpack
 function scripts() {
     return gulp.src(paths.scripts.src)
@@ -61,7 +56,31 @@ function scripts() {
         .pipe(gulp.dest(paths.scripts.dest));
 }
 
+// watch
+function watch() {
+    gulp.watch(paths.styles.src, styles);
+    gulp.watch(paths.templates.src, templates);
+    gulp.watch(paths.scripts.src, scripts);
+}
+
+//server
+function server() {
+    browserSync.init({
+        server: paths.root
+    });
+    browserSync.watch(paths.root + '/**/*.*', browserSync.reload);
+}
+
 exports.templates = templates;
 exports.styles = styles;
 exports.clean = clean;
 exports.scripts = scripts;
+exports.watch = watch;
+exports.server = server;
+
+// default
+gulp.task('default', gulp.series(
+    clean,
+    gulp.parallel(styles, templates, scripts),
+    gulp.parallel(watch, server)
+));
