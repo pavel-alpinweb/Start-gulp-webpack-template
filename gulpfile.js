@@ -22,7 +22,7 @@ const paths = {
     styles: {
         main: './src/assets/styles/main.scss',
         src: './src/assets/styles/**/*.scss',
-        dest: './build/assets/styles'
+        dest: './build/assets/styles/'
     },
     scripts: {
         src: './src/assets/scripts/*.js',
@@ -30,15 +30,15 @@ const paths = {
     },
     images: {
         src: './src/assets/images/**/*.*',
-        dest: './build/assets/images/**/*.*'
+        dest: './build/assets/images/'
     },
     icons: {
         src: './src/assets/images/icons/*.svg',
-        dest: './build/assets/images/icons/*.svg'
+        dest: './build/assets/images/icons/'
     },
     fonts: {
         src: './src/assets/fonts/*.*',
-        dest: './build/assets/fonts'
+        dest: './build/assets/fonts/'
     }
 }
 
@@ -71,7 +71,14 @@ function images() {
         paths.images.src,
         paths.icons.src
       ])
-      .pipe(gulp.dest(`${paths.root}/assets/images/`));
+      .pipe(gulp.dest(paths.images.dest));
+}
+
+// просто переносим шрифты
+function fonts() {
+    return gulp
+      .src(paths.fonts.src,)
+      .pipe(gulp.dest(paths.fonts.dest));
 }
 
 // webpack
@@ -135,10 +142,11 @@ exports.watch = watch;
 exports.server = server;
 exports.Iconfont = Iconfont;
 exports.images = images;
+exports.fonts = fonts;
 
 // default
 gulp.task('default', gulp.series(
     clean,
-    gulp.parallel(Iconfont, images, styles, templates, scripts),
+    gulp.parallel(Iconfont, images, fonts, styles, templates, scripts),
     gulp.parallel(watch, server)
 ));
