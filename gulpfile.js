@@ -28,6 +28,10 @@ const paths = {
         src: './src/assets/scripts/*.js',
         dest: './build/assets/scripts/'
     },
+    images: {
+        src: './src/assets/images/**/*.*',
+        dest: './build/assets/images/**/*.*'
+    },
     icons: {
         src: './src/assets/images/icons/*.svg',
         dest: './build/assets/images/icons/*.svg'
@@ -58,6 +62,16 @@ function styles() {
         .pipe(sourcemaps.write())
         .pipe(rename('main.min.css'))
         .pipe(gulp.dest(paths.styles.dest))
+}
+
+// просто переносим картинки
+function images() {
+    return gulp
+      .src([
+        paths.images.src,
+        paths.icons.src
+      ])
+      .pipe(gulp.dest(`${paths.root}/assets/images/`));
 }
 
 // webpack
@@ -120,10 +134,11 @@ exports.scripts = scripts;
 exports.watch = watch;
 exports.server = server;
 exports.Iconfont = Iconfont;
+exports.images = images;
 
 // default
 gulp.task('default', gulp.series(
     clean,
-    gulp.parallel(Iconfont, styles, templates, scripts),
+    gulp.parallel(Iconfont, images, styles, templates, scripts),
     gulp.parallel(watch, server)
 ));
