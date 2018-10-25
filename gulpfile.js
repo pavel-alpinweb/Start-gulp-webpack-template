@@ -79,26 +79,26 @@ function server() {
 }
 
 gulp.task('Iconfont', function(done){
-    var iconStream = gulp.src(['assets/icons/*.svg'])
+    var iconStream = gulp.src(['./src/assets/images/icons/*.svg'])
       .pipe(iconfont({ fontName: 'myfont' }));
    
     async.parallel([
       function handleGlyphs (cb) {
         iconStream.on('glyphs', function(glyphs, options) {
-          gulp.src('templates/myfont.css')
+          gulp.src('./src/assets/styles/layout/myfont.css')
             .pipe(consolidate('lodash', {
               glyphs: glyphs,
               fontName: 'myfont',
-              fontPath: '../fonts/',
+              fontPath: './src/assets/fonts/',
               className: 's'
             }))
-            .pipe(gulp.dest('www/css/'))
+            .pipe(gulp.dest(paths.styles.dest))
             .on('finish', cb);
         });
       },
       function handleFonts (cb) {
         iconStream
-          .pipe(gulp.dest('www/fonts/'))
+          .pipe(gulp.dest('./build/assets/fonts'))
           .on('finish', cb);
       }
     ], done);
