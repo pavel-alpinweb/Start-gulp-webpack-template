@@ -10,6 +10,7 @@ const webpackConfig = require('./webpack.config.js');
 const browserSync = require('browser-sync').create();
 const iconfont = require('gulp-iconfont');
 const consolidate  = require('gulp-consolidate');
+const async = require('async');
 
 const paths = {
     root: 'build',
@@ -76,6 +77,32 @@ function server() {
     });
     browserSync.watch(paths.root + '/**/*.*', browserSync.reload);
 }
+
+gulp.task('Iconfont', function(done){
+    var iconStream = gulp.src(['assets/icons/*.svg'])
+      .pipe(iconfont({ fontName: 'myfont' }));
+   
+    async.parallel([
+      function handleGlyphs (cb) {
+        iconStream.on('glyphs', function(glyphs, options) {
+          gulp.src('templates/myfont.css')
+            .pipe(consolidate('lodash', {
+              glyphs: glyphs,
+              fontName: 'myfont',
+              fontPath: '../fonts/',
+              className: 's'
+            }))
+            .pipe(gulp.dest('www/css/'))
+            .on('finish', cb);
+        });
+      },
+      function handleFonts (cb) {
+        iconStream
+          .pipe(gulp.dest('www/fonts/'))
+          .on('finish', cb);
+      }
+    ], done);
+  });
 
 exports.templates = templates;
 exports.styles = styles;
