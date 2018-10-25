@@ -84,7 +84,12 @@ function server() {
 
 function Iconfont(done) {
     let iconStream = gulp.src(paths.icons.src)
-      .pipe(iconfont({ fontName: 'myfont' }));
+      .pipe(iconfont({ 
+          fontName: 'myfont',
+          normalize:true,
+          prependUnicode: true,
+          fontHeight: 1001
+        }));
    
     async.parallel([
       function handleGlyphs (cb) {
