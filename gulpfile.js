@@ -82,14 +82,14 @@ function server() {
     browserSync.watch(paths.root + '/**/*.*', browserSync.reload);
 }
 
-gulp.task('Iconfont', function(done){
+function Iconfont(done) {
     let iconStream = gulp.src(paths.icons.src)
       .pipe(iconfont({ fontName: 'myfont' }));
    
     async.parallel([
       function handleGlyphs (cb) {
         iconStream.on('glyphs', function(glyphs, options) {
-          gulp.src('./src/assets/styles/layout/myfont.scss')
+          gulp.src('./src/assets/styles/layout/myfont.css')
             .pipe(consolidate('lodash', {
               glyphs: glyphs,
               fontName: 'myfont',
@@ -105,8 +105,8 @@ gulp.task('Iconfont', function(done){
           .pipe(gulp.dest(paths.fonts.dest))
           .on('finish', cb);
       }
-    ], done);
-  });
+    ], done);   
+}
 
 exports.templates = templates;
 exports.styles = styles;
@@ -114,11 +114,11 @@ exports.clean = clean;
 exports.scripts = scripts;
 exports.watch = watch;
 exports.server = server;
+exports.Iconfont = Iconfont;
 
 // default
 gulp.task('default', gulp.series(
     clean,
-    Iconfont,
-    gulp.parallel(styles, templates, scripts),
+    gulp.parallel(Iconfont, styles, templates, scripts),
     gulp.parallel(watch, server)
 ));
