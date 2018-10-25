@@ -31,6 +31,10 @@ const paths = {
     icons: {
         src: './src/assets/images/icons/*.svg',
         dest: './build/assets/images/icons/*.svg'
+    },
+    fonts: {
+        src: './src/assets/fonts/*.*',
+        dest: './build/assets/fonts'
     }
 }
 
@@ -79,26 +83,26 @@ function server() {
 }
 
 gulp.task('Iconfont', function(done){
-    var iconStream = gulp.src(['./src/assets/images/icons/*.svg'])
+    let iconStream = gulp.src(paths.icons.src)
       .pipe(iconfont({ fontName: 'myfont' }));
    
     async.parallel([
       function handleGlyphs (cb) {
         iconStream.on('glyphs', function(glyphs, options) {
-          gulp.src('./src/assets/styles/layout/myfont.css')
+          gulp.src('./src/assets/styles/layout/myfont.scss')
             .pipe(consolidate('lodash', {
               glyphs: glyphs,
               fontName: 'myfont',
               fontPath: '../fonts/',
               className: 'myfont'
             }))
-            .pipe(gulp.dest(paths.styles.dest))
+            .pipe(gulp.dest('./src/assets/styles/'))
             .on('finish', cb);
         });
       },
       function handleFonts (cb) {
         iconStream
-          .pipe(gulp.dest('./build/assets/fonts'))
+          .pipe(gulp.dest(paths.fonts.dest))
           .on('finish', cb);
       }
     ], done);
@@ -114,6 +118,7 @@ exports.server = server;
 // default
 gulp.task('default', gulp.series(
     clean,
+    Iconfont,
     gulp.parallel(styles, templates, scripts),
     gulp.parallel(watch, server)
 ));

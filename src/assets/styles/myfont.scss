@@ -1,0 +1,42 @@
+@font-face {
+    font-family: "myfont";
+    src: url('../fonts/myfont.eot');
+    src: url('../fonts/myfont.eot?#iefix') format('eot'),
+        url('../fonts/myfont.woff2') format('woff2'),
+        url('../fonts/myfont.woff') format('woff'),
+        url('../fonts/myfont.ttf') format('truetype'),
+        url('../fonts/myfont.svg#myfont') format('svg');
+}
+
+.myfont:before {
+    font-family: "myfont";
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    /* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
+    text-decoration: none;
+    text-transform: none;
+}
+
+
+.myfont-github:before {
+    content: "\EA01";
+}
+
+.myfont-map_marker:before {
+    content: "\EA02";
+}
+
+.myfont-stars1:before {
+    content: "\EA03";
+}
+
+.myfont-stars2:before {
+    content: "\EA04";
+}
+
+.myfont-stars3:before {
+    content: "\EA05";
+}
