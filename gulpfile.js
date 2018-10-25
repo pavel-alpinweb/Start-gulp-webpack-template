@@ -93,6 +93,9 @@ function watch() {
     gulp.watch(paths.styles.src, styles);
     gulp.watch(paths.templates.src, templates);
     gulp.watch(paths.scripts.src, scripts);
+    gulp.watch(paths.images.src, images);
+    gulp.watch(paths.fonts.src, fonts);
+    gulp.watch(paths.icons.src, Iconfont);
 }
 
 //server
@@ -108,7 +111,6 @@ function Iconfont(done) {
       .pipe(iconfont({ 
           fontName: 'myfont',
           normalize:true,
-          prependUnicode: true,
           fontHeight: 1001
         }));
    

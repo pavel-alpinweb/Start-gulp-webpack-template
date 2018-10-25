@@ -25,18 +25,10 @@
     content: "\EA01";
 }
 
-.myfont-map_marker:before {
+.myfont-Scorenga-footer:before {
     content: "\EA02";
 }
 
-.myfont-stars1:before {
+.myfont-Scorenga:before {
     content: "\EA03";
-}
-
-.myfont-stars2:before {
-    content: "\EA04";
-}
-
-.myfont-stars3:before {
-    content: "\EA05";
 }
