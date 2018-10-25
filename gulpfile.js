@@ -8,6 +8,8 @@ const gulpWebpack = require('gulp-webpack');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config.js');
 const browserSync = require('browser-sync').create();
+const iconfont = require('gulp-iconfont');
+const consolidate  = require('gulp-consolidate');
 
 const paths = {
     root: 'build',
@@ -24,6 +26,10 @@ const paths = {
     scripts: {
         src: './src/assets/scripts/*.js',
         dest: './build/assets/scripts/'
+    },
+    icons: {
+        src: './src/assets/images/icons/*.svg',
+        dest: './build/assets/images/icons/*.svg'
     }
 }
 
